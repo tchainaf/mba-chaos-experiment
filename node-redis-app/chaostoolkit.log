@@ -1,0 +1,147 @@
+[36m[2025-04-26 17:19:45 DEBUG] [__init__:101][39m ###############################################################################
+[36m[2025-04-26 17:19:45 DEBUG] [__init__:102][39m Running command 'init'
+[36m[2025-04-26 17:19:45 DEBUG] [__init__:106][39m Using settings file '/home/ubuntu/.chaostoolkit/settings.yaml'
+[36m[2025-04-26 17:19:45 DEBUG] [settings:31][39m The Chaos Toolkit settings file could not be found at '/home/ubuntu/.chaostoolkit/settings.yaml'.
+[36m[2025-04-26 17:22:07 DEBUG] [__init__:101][39m ###############################################################################
+[36m[2025-04-26 17:22:07 DEBUG] [__init__:102][39m Running command 'run'
+[36m[2025-04-26 17:22:07 DEBUG] [__init__:106][39m Using settings file '/home/ubuntu/.chaostoolkit/settings.yaml'
+[36m[2025-04-26 17:22:07 DEBUG] [settings:31][39m The Chaos Toolkit settings file could not be found at '/home/ubuntu/.chaostoolkit/settings.yaml'.
+[36m[2025-04-26 17:22:07 DEBUG] [__init__:472][39m No controls to apply on 'loader'
+[36m[2025-04-26 17:22:07 DEBUG] [__init__:472][39m No controls to apply on 'loader'
+[36m[2025-04-26 17:22:07 DEBUG] [caching:24][39m Building activity cache...
+[36m[2025-04-26 17:22:07 DEBUG] [caching:35][39m Cached 4 activities
+[32m[2025-04-26 17:22:07 INFO] [experiment:59][39m Validating the experiment's syntax
+[36m[2025-04-26 17:22:07 DEBUG] [configuration:64][39m Loading configuration...
+[36m[2025-04-26 17:22:07 DEBUG] [secret:79][39m Loading secrets...
+[36m[2025-04-26 17:22:07 DEBUG] [secret:104][39m Done loading secrets
+[32m[2025-04-26 17:22:07 INFO] [experiment:112][39m Experiment looks valid
+[36m[2025-04-26 17:22:07 DEBUG] [caching:42][39m Clearing activities cache
+[36m[2025-04-26 17:22:07 DEBUG] [run:224][39m Runtime strategies: hypothesis - default / rollbacks - default
+[36m[2025-04-26 17:22:07 DEBUG] [caching:24][39m Building activity cache...
+[36m[2025-04-26 17:22:07 DEBUG] [caching:35][39m Cached 4 activities
+[36m[2025-04-26 17:22:07 DEBUG] [configuration:64][39m Loading configuration...
+[36m[2025-04-26 17:22:07 DEBUG] [secret:79][39m Loading secrets...
+[36m[2025-04-26 17:22:07 DEBUG] [secret:104][39m Done loading secrets
+[36m[2025-04-26 17:22:07 DEBUG] [configuration:161][39m Loading dynamic configuration...
+[32m[2025-04-26 17:22:07 INFO] [run:440][39m Running experiment: Teste simples de falha no Redis
+[36m[2025-04-26 17:22:07 DEBUG] [__init__:67][39m Initializing controls
+[32m[2025-04-26 17:22:07 INFO] [run:471][39m Steady-state strategy: default
+[32m[2025-04-26 17:22:07 INFO] [run:477][39m Rollbacks strategy: default
+[36m[2025-04-26 17:22:07 DEBUG] [__init__:472][39m No controls to apply on 'experiment'
+[36m[2025-04-26 17:22:07 DEBUG] [run:654][39m Running steady-state hypothesis before the method
+[32m[2025-04-26 17:22:07 INFO] [hypothesis:205][39m Steady state hypothesis: Aplicação está saudável
+[36m[2025-04-26 17:22:07 DEBUG] [__init__:472][39m No controls to apply on 'hypothesis'
+[36m[2025-04-26 17:22:07 DEBUG] [__init__:472][39m No controls to apply on 'activity'
+[32m[2025-04-26 17:22:07 INFO] [activity:232][39m Probe: verifica_servico_aplicacao
+[36m[2025-04-26 17:22:07 DEBUG] [activity:260][39m   => succeeded with '{'status': 200, 'headers': {'X-Powered-By': 'Express', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '30', 'ETag': 'W/"1e-UF0jTsFD9vB+n1yXcauIzFvQUGs"', 'Date': 'Sat, 26 Apr 2025 17:22:07 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'}, 'body': '{"status":"ok","redis":"pong"}'}'
+[36m[2025-04-26 17:22:07 DEBUG] [__init__:472][39m No controls to apply on 'activity'
+[36m[2025-04-26 17:22:07 DEBUG] [hypothesis:247][39m allowed tolerance is 200
+[32m[2025-04-26 17:22:07 INFO] [hypothesis:260][39m Steady state hypothesis is met!
+[36m[2025-04-26 17:22:07 DEBUG] [__init__:472][39m No controls to apply on 'hypothesis'
+[32m[2025-04-26 17:22:07 INFO] [run:778][39m Playing your experiment's method now...
+[36m[2025-04-26 17:22:07 DEBUG] [__init__:472][39m No controls to apply on 'method'
+[36m[2025-04-26 17:22:07 DEBUG] [__init__:472][39m No controls to apply on 'activity'
+[32m[2025-04-26 17:22:07 INFO] [activity:232][39m Action: parar_container_redis
+[36m[2025-04-26 17:22:07 DEBUG] [process:52][39m Running: /usr/bin/docker stop redis
+[36m[2025-04-26 17:22:08 DEBUG] [activity:260][39m   => succeeded with '{'status': 0, 'stdout': 'redis\n', 'stderr': ''}'
+[36m[2025-04-26 17:22:08 DEBUG] [__init__:472][39m No controls to apply on 'activity'
+[36m[2025-04-26 17:22:08 DEBUG] [__init__:472][39m No controls to apply on 'activity'
+[32m[2025-04-26 17:22:08 INFO] [activity:232][39m Probe: verifica_servico_aplicacao_apos_falha
+[36m[2025-04-26 17:22:11 DEBUG] [activity:317][39m Activity failed
+    Traceback (most recent call last):
+      File "/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/urllib3/connectionpool.py", line 534, in _make_request
+        response = conn.getresponse()
+                   ^^^^^^^^^^^^^^^^^^
+      File "/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/urllib3/connection.py", line 516, in getresponse
+        httplib_response = super().getresponse()
+                           ^^^^^^^^^^^^^^^^^^^^^
+      File "/usr/lib/python3.12/http/client.py", line 1428, in getresponse
+        response.begin()
+      File "/usr/lib/python3.12/http/client.py", line 331, in begin
+        version, status, reason = self._read_status()
+                                  ^^^^^^^^^^^^^^^^^^^
+      File "/usr/lib/python3.12/http/client.py", line 292, in _read_status
+        line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/usr/lib/python3.12/socket.py", line 707, in readinto
+        return self._sock.recv_into(b)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+    TimeoutError: timed out
+    
+    The above exception was the direct cause of the following exception:
+    
+    Traceback (most recent call last):
+      File "/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/requests/adapters.py", line 667, in send
+        resp = conn.urlopen(
+               ^^^^^^^^^^^^^
+      File "/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/urllib3/connectionpool.py", line 841, in urlopen
+        retries = retries.increment(
+                  ^^^^^^^^^^^^^^^^^^
+      File "/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/urllib3/util/retry.py", line 474, in increment
+        raise reraise(type(error), error, _stacktrace)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/urllib3/util/util.py", line 39, in reraise
+        raise value
+      File "/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/urllib3/connectionpool.py", line 787, in urlopen
+        response = self._make_request(
+                   ^^^^^^^^^^^^^^^^^^^
+      File "/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/urllib3/connectionpool.py", line 536, in _make_request
+        self._raise_timeout(err=e, url=url, timeout_value=read_timeout)
+      File "/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/urllib3/connectionpool.py", line 367, in _raise_timeout
+        raise ReadTimeoutError(
+    urllib3.exceptions.ReadTimeoutError: HTTPConnectionPool(host='localhost', port=3000): Read timed out. (read timeout=3)
+    
+    During handling of the above exception, another exception occurred:
+    
+    Traceback (most recent call last):
+      File "/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/chaoslib/provider/http.py", line 51, in run_http_activity
+        r = s.get(
+            ^^^^^^
+      File "/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/requests/sessions.py", line 602, in get
+        return self.request("GET", url, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/requests/sessions.py", line 589, in request
+        resp = self.send(prep, **send_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/requests/sessions.py", line 703, in send
+        r = adapter.send(request, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/requests/adapters.py", line 713, in send
+        raise ReadTimeout(e, request=request)
+    requests.exceptions.ReadTimeout: HTTPConnectionPool(host='localhost', port=3000): Read timed out. (read timeout=3)
+    
+    During handling of the above exception, another exception occurred:
+    
+    Traceback (most recent call last):
+      File "/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/chaoslib/activity.py", line 314, in run_activity
+        result = run_http_activity(activity, configuration, secrets)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/chaoslib/provider/http.py", line 103, in run_http_activity
+        raise ActivityFailed("activity took too long to complete")
+    chaoslib.exceptions.ActivityFailed: activity took too long to complete
+[31m[2025-04-26 17:22:11 ERROR] [activity:268][39m   => failed: activity took too long to complete
+[36m[2025-04-26 17:22:11 DEBUG] [__init__:472][39m No controls to apply on 'activity'
+[36m[2025-04-26 17:22:11 DEBUG] [__init__:472][39m No controls to apply on 'activity'
+[32m[2025-04-26 17:22:11 INFO] [activity:232][39m Action: iniciar_container_redis
+[36m[2025-04-26 17:22:11 DEBUG] [process:52][39m Running: /usr/bin/docker start redis
+[36m[2025-04-26 17:22:11 DEBUG] [activity:260][39m   => succeeded with '{'status': 0, 'stdout': 'redis\n', 'stderr': ''}'
+[36m[2025-04-26 17:22:11 DEBUG] [__init__:472][39m No controls to apply on 'activity'
+[36m[2025-04-26 17:22:11 DEBUG] [__init__:472][39m No controls to apply on 'method'
+[36m[2025-04-26 17:22:11 DEBUG] [run:696][39m Running steady-state hypothesis after the method
+[32m[2025-04-26 17:22:11 INFO] [hypothesis:205][39m Steady state hypothesis: Aplicação está saudável
+[36m[2025-04-26 17:22:11 DEBUG] [__init__:472][39m No controls to apply on 'hypothesis'
+[36m[2025-04-26 17:22:11 DEBUG] [__init__:472][39m No controls to apply on 'activity'
+[32m[2025-04-26 17:22:11 INFO] [activity:232][39m Probe: verifica_servico_aplicacao
+[36m[2025-04-26 17:22:12 DEBUG] [activity:260][39m   => succeeded with '{'status': 200, 'headers': {'X-Powered-By': 'Express', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '30', 'ETag': 'W/"1e-UF0jTsFD9vB+n1yXcauIzFvQUGs"', 'Date': 'Sat, 26 Apr 2025 17:22:12 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'}, 'body': '{"status":"ok","redis":"pong"}'}'
+[36m[2025-04-26 17:22:12 DEBUG] [__init__:472][39m No controls to apply on 'activity'
+[36m[2025-04-26 17:22:12 DEBUG] [hypothesis:247][39m allowed tolerance is 200
+[32m[2025-04-26 17:22:12 INFO] [hypothesis:260][39m Steady state hypothesis is met!
+[36m[2025-04-26 17:22:12 DEBUG] [__init__:472][39m No controls to apply on 'hypothesis'
+[32m[2025-04-26 17:22:12 INFO] [run:1072][39m Let's rollback...
+[36m[2025-04-26 17:22:12 DEBUG] [__init__:472][39m No controls to apply on 'rollback'
+[32m[2025-04-26 17:22:12 INFO] [rollback:33][39m No declared rollbacks, let's move on.
+[36m[2025-04-26 17:22:12 DEBUG] [__init__:472][39m No controls to apply on 'rollback'
+[32m[2025-04-26 17:22:12 INFO] [run:598][39m Experiment ended with status: completed
+[36m[2025-04-26 17:22:12 DEBUG] [__init__:472][39m No controls to apply on 'experiment'
+[36m[2025-04-26 17:22:12 DEBUG] [__init__:106][39m Cleaning up controls
+[36m[2025-04-26 17:22:12 DEBUG] [caching:42][39m Clearing activities cache

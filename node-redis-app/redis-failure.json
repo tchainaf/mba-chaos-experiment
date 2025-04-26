@@ -1,0 +1,54 @@
+{
+  "version": "1.0.0",
+  "title": "Teste simples de falha no Redis",
+  "description": "Simula indisponibilidade do Redis e observa se o sistema continua funcional.",
+  "tags": ["redis", "chaos", "docker"],
+  "steady-state-hypothesis": {
+    "title": "Aplicação está saudável",
+    "probes": [
+      {
+        "type": "probe",
+        "name": "verifica_servico_aplicacao",
+        "tolerance": 200,
+        "provider": {
+          "type": "http",
+          "timeout": 3,
+          "url": "http://localhost:3000/health",
+          "method": "GET"
+        }
+      }
+    ]
+  },
+  "method": [
+    {
+      "type": "action",
+      "name": "parar_container_redis",
+      "provider": {
+        "type": "process",
+        "path": "docker",
+        "arguments": "stop redis"
+      }
+    },
+    {
+      "type": "probe",
+      "name": "verifica_servico_aplicacao_apos_falha",
+      "tolerance": 200,
+      "provider": {
+        "type": "http",
+        "timeout": 3,
+        "url": "http://localhost:3000/health",
+        "method": "GET"
+      }
+    },
+    {
+      "type": "action",
+      "name": "iniciar_container_redis",
+      "provider": {
+        "type": "process",
+        "path": "docker",
+        "arguments": "start redis"
+      }
+    }
+  ],
+  "rollbacks": []
+}

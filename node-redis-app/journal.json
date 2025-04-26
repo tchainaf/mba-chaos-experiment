@@ -1,0 +1,235 @@
+{
+  "chaoslib-version": "1.44.0",
+  "platform": "Linux-6.8.0-1024-aws-x86_64-with-glibc2.39",
+  "node": "ip-172-31-84-106",
+  "experiment": {
+    "version": "1.0.0",
+    "title": "Teste simples de falha no Redis",
+    "description": "Simula indisponibilidade do Redis e observa se o sistema continua funcional.",
+    "tags": [
+      "redis",
+      "chaos",
+      "docker"
+    ],
+    "steady-state-hypothesis": {
+      "title": "Aplicação está saudável",
+      "probes": [
+        {
+          "type": "probe",
+          "name": "verifica_servico_aplicacao",
+          "tolerance": 200,
+          "provider": {
+            "type": "http",
+            "timeout": 3,
+            "url": "http://localhost:3000/health",
+            "method": "GET"
+          }
+        }
+      ]
+    },
+    "method": [
+      {
+        "type": "action",
+        "name": "parar_container_redis",
+        "provider": {
+          "type": "process",
+          "path": "docker",
+          "arguments": "stop redis"
+        }
+      },
+      {
+        "type": "probe",
+        "name": "verifica_servico_aplicacao_apos_falha",
+        "tolerance": 200,
+        "provider": {
+          "type": "http",
+          "timeout": 3,
+          "url": "http://localhost:3000/health",
+          "method": "GET"
+        }
+      },
+      {
+        "type": "action",
+        "name": "iniciar_container_redis",
+        "provider": {
+          "type": "process",
+          "path": "docker",
+          "arguments": "start redis"
+        }
+      }
+    ],
+    "rollbacks": [],
+    "dry": null
+  },
+  "start": "2025-04-26T17:22:07.980095+00:00",
+  "status": "completed",
+  "deviated": false,
+  "steady_states": {
+    "before": {
+      "steady_state_met": true,
+      "probes": [
+        {
+          "activity": {
+            "type": "probe",
+            "name": "verifica_servico_aplicacao",
+            "tolerance": 200,
+            "provider": {
+              "type": "http",
+              "timeout": 3,
+              "url": "http://localhost:3000/health",
+              "method": "GET"
+            }
+          },
+          "output": {
+            "status": 200,
+            "headers": {
+              "X-Powered-By": "Express",
+              "Content-Type": "application/json; charset=utf-8",
+              "Content-Length": "30",
+              "ETag": "W/\"1e-UF0jTsFD9vB+n1yXcauIzFvQUGs\"",
+              "Date": "Sat, 26 Apr 2025 17:22:07 GMT",
+              "Connection": "keep-alive",
+              "Keep-Alive": "timeout=5"
+            },
+            "body": "{\"status\":\"ok\",\"redis\":\"pong\"}"
+          },
+          "start": "2025-04-26T17:22:07.980957+00:00",
+          "status": "succeeded",
+          "end": "2025-04-26T17:22:07.994867+00:00",
+          "duration": 0.01391,
+          "tolerance_met": true
+        }
+      ]
+    },
+    "after": {
+      "steady_state_met": true,
+      "probes": [
+        {
+          "activity": {
+            "type": "probe",
+            "name": "verifica_servico_aplicacao",
+            "tolerance": 200,
+            "provider": {
+              "type": "http",
+              "timeout": 3,
+              "url": "http://localhost:3000/health",
+              "method": "GET"
+            }
+          },
+          "output": {
+            "status": 200,
+            "headers": {
+              "X-Powered-By": "Express",
+              "Content-Type": "application/json; charset=utf-8",
+              "Content-Length": "30",
+              "ETag": "W/\"1e-UF0jTsFD9vB+n1yXcauIzFvQUGs\"",
+              "Date": "Sat, 26 Apr 2025 17:22:12 GMT",
+              "Connection": "keep-alive",
+              "Keep-Alive": "timeout=5"
+            },
+            "body": "{\"status\":\"ok\",\"redis\":\"pong\"}"
+          },
+          "start": "2025-04-26T17:22:11.688957+00:00",
+          "status": "succeeded",
+          "end": "2025-04-26T17:22:12.442116+00:00",
+          "duration": 0.753159,
+          "tolerance_met": true
+        }
+      ]
+    },
+    "during": []
+  },
+  "run": [
+    {
+      "activity": {
+        "type": "action",
+        "name": "parar_container_redis",
+        "provider": {
+          "type": "process",
+          "path": "docker",
+          "arguments": "stop redis"
+        }
+      },
+      "output": {
+        "status": 0,
+        "stdout": "redis\n",
+        "stderr": ""
+      },
+      "start": "2025-04-26T17:22:07.997108+00:00",
+      "status": "succeeded",
+      "end": "2025-04-26T17:22:08.231196+00:00",
+      "duration": 0.234088
+    },
+    {
+      "activity": {
+        "type": "probe",
+        "name": "verifica_servico_aplicacao_apos_falha",
+        "tolerance": 200,
+        "provider": {
+          "type": "http",
+          "timeout": 3,
+          "url": "http://localhost:3000/health",
+          "method": "GET"
+        }
+      },
+      "output": null,
+      "start": "2025-04-26T17:22:08.232446+00:00",
+      "status": "failed",
+      "exception": [
+        "Traceback (most recent call last):\n",
+        "  File \"/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/urllib3/connectionpool.py\", line 534, in _make_request\n    response = conn.getresponse()\n               ^^^^^^^^^^^^^^^^^^\n",
+        "  File \"/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/urllib3/connection.py\", line 516, in getresponse\n    httplib_response = super().getresponse()\n                       ^^^^^^^^^^^^^^^^^^^^^\n",
+        "  File \"/usr/lib/python3.12/http/client.py\", line 1428, in getresponse\n    response.begin()\n",
+        "  File \"/usr/lib/python3.12/http/client.py\", line 331, in begin\n    version, status, reason = self._read_status()\n                              ^^^^^^^^^^^^^^^^^^^\n",
+        "  File \"/usr/lib/python3.12/http/client.py\", line 292, in _read_status\n    line = str(self.fp.readline(_MAXLINE + 1), \"iso-8859-1\")\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
+        "  File \"/usr/lib/python3.12/socket.py\", line 707, in readinto\n    return self._sock.recv_into(b)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n",
+        "TimeoutError: timed out\n",
+        "\nThe above exception was the direct cause of the following exception:\n\n",
+        "Traceback (most recent call last):\n",
+        "  File \"/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/requests/adapters.py\", line 667, in send\n    resp = conn.urlopen(\n           ^^^^^^^^^^^^^\n",
+        "  File \"/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/urllib3/connectionpool.py\", line 841, in urlopen\n    retries = retries.increment(\n              ^^^^^^^^^^^^^^^^^^\n",
+        "  File \"/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/urllib3/util/retry.py\", line 474, in increment\n    raise reraise(type(error), error, _stacktrace)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
+        "  File \"/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/urllib3/util/util.py\", line 39, in reraise\n    raise value\n",
+        "  File \"/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/urllib3/connectionpool.py\", line 787, in urlopen\n    response = self._make_request(\n               ^^^^^^^^^^^^^^^^^^^\n",
+        "  File \"/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/urllib3/connectionpool.py\", line 536, in _make_request\n    self._raise_timeout(err=e, url=url, timeout_value=read_timeout)\n",
+        "  File \"/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/urllib3/connectionpool.py\", line 367, in _raise_timeout\n    raise ReadTimeoutError(\n",
+        "urllib3.exceptions.ReadTimeoutError: HTTPConnectionPool(host='localhost', port=3000): Read timed out. (read timeout=3)\n",
+        "\nDuring handling of the above exception, another exception occurred:\n\n",
+        "Traceback (most recent call last):\n",
+        "  File \"/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/chaoslib/provider/http.py\", line 51, in run_http_activity\n    r = s.get(\n        ^^^^^^\n",
+        "  File \"/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/requests/sessions.py\", line 602, in get\n    return self.request(\"GET\", url, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
+        "  File \"/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/requests/sessions.py\", line 589, in request\n    resp = self.send(prep, **send_kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
+        "  File \"/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/requests/sessions.py\", line 703, in send\n    r = adapter.send(request, **kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
+        "  File \"/home/ubuntu/.local/share/pipx/venvs/chaostoolkit/lib/python3.12/site-packages/requests/adapters.py\", line 713, in send\n    raise ReadTimeout(e, request=request)\n",
+        "requests.exceptions.ReadTimeout: HTTPConnectionPool(host='localhost', port=3000): Read timed out. (read timeout=3)\n",
+        "\nDuring handling of the above exception, another exception occurred:\n\n",
+        "chaoslib.exceptions.ActivityFailed: activity took too long to complete\n"
+      ],
+      "end": "2025-04-26T17:22:11.244423+00:00",
+      "duration": 3.011977
+    },
+    {
+      "activity": {
+        "type": "action",
+        "name": "iniciar_container_redis",
+        "provider": {
+          "type": "process",
+          "path": "docker",
+          "arguments": "start redis"
+        }
+      },
+      "output": {
+        "status": 0,
+        "stdout": "redis\n",
+        "stderr": ""
+      },
+      "start": "2025-04-26T17:22:11.244561+00:00",
+      "status": "succeeded",
+      "end": "2025-04-26T17:22:11.688381+00:00",
+      "duration": 0.44382
+    }
+  ],
+  "rollbacks": [],
+  "end": "2025-04-26T17:22:12.442470+00:00",
+  "duration": 4.463852167129517
+}
